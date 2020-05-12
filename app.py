@@ -59,6 +59,15 @@ def unauthorized():
 
 
 
+CORS(users, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(admins, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(adminstatuses, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(statuses, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(events, origins=['http://localhost:3000'], supports_credentials=True)
+
+
+
+
 app.register_blueprint(users, url_prefix='/api/users/')
 app.register_blueprint(admins, url_prefix='/api/admins/')
 app.register_blueprint(events, url_prefix='/api/events/')
