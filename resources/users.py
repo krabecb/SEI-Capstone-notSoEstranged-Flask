@@ -24,6 +24,8 @@ def register():
 	payload['username'] = payload['username'].lower()
 	payload['password'] = payload['password'].lower()
 	payload['date_of_birth'] = payload['date_of_birth']
+	payload['address'] = payload['address']
+	payload['phone_number'] = payload['phone_number']
 	payload['emergency_contact'] = payload['emergency_contact'].lower()
 	payload['about_me'] = payload['about_me'].lower()
 	print(payload)
@@ -45,8 +47,12 @@ def register():
 			username=payload['username'],
 			password=pw_hash,
 			date_of_birth=payload['date_of_birth'],
+			address=payload['address'],
+			phone_number=payload['phone_number'],
 			emergency_contact=payload['emergency_contact'],
-			about_me=payload['about_me']
+			about_me=payload['about_me'],
+			attending_event=payload['attending_event'],
+			is_admin=payload['is_admin']
 		)
 
 		print(created_user)

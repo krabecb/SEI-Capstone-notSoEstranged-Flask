@@ -2,11 +2,7 @@ from flask import Flask, jsonify
 
 from resources.users import users
 
-from resources.admins import admins
-
 from resources.events import events
-
-from resources.adminstatuses import adminstatuses
 
 from resources.statuses import statuses
 
@@ -60,8 +56,6 @@ def unauthorized():
 
 
 CORS(users, origins=['http://localhost:3000'], supports_credentials=True)
-CORS(admins, origins=['http://localhost:3000'], supports_credentials=True)
-CORS(adminstatuses, origins=['http://localhost:3000'], supports_credentials=True)
 CORS(statuses, origins=['http://localhost:3000'], supports_credentials=True)
 CORS(events, origins=['http://localhost:3000'], supports_credentials=True)
 
@@ -69,9 +63,7 @@ CORS(events, origins=['http://localhost:3000'], supports_credentials=True)
 
 
 app.register_blueprint(users, url_prefix='/api/users/')
-app.register_blueprint(admins, url_prefix='/api/admins/')
 app.register_blueprint(events, url_prefix='/api/events/')
-app.register_blueprint(adminstatuses, url_prefix='/api/adminstatuses/')
 app.register_blueprint(statuses, url_prefix='/api/statuses/')
 
 

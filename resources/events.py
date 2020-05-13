@@ -20,7 +20,7 @@ def events_index():
 	current_user_event_dicts = [model_to_dict(event) for event in current_user.events]
 
 	for event_dict in current_user_event_dicts:
-		event_dict['admin'].pop('password')
+		event_dict['user'].pop('password')
 
 	print(current_user_event_dicts)
 
@@ -39,14 +39,14 @@ def create_event():
 		event_organizer=payload['event_organizer'],
 		event_location=payload['event_location'],
 		date_of_event=payload['date_of_event'],
-		admin=current_user.id
+		user=current_user.id
 	)
 
 	event_dict = model_to_dict(new_event)
 
 	print(event_dict)
 
-	event_dict['admin'].pop('password')
+	event_dict['user'].pop('password')
 
 	return jsonify(
 		data=event_dict,
@@ -59,7 +59,7 @@ def create_event():
 def delete_event(id):
 	try:
 		event_to_delete = models.Event.get_by_id(id)
-		if event_to_delete.admin.id == current_user.id:
+		if event_to_delete.user.id == current_user.id:
 			event_to_delete.delete_instance()
 
 			return jsonify(
@@ -71,7 +71,7 @@ def delete_event(id):
 
 			return jsonify(
 				data={ 'error': '403 Forbidden' },
-				message="Admin's id does not match event's id. Cannot delete.",
+				message="User's id does not match event's id. Cannot delete.",
 				status=403
 			), 403
 	except models.DoesNotExist:
@@ -87,7 +87,7 @@ def delete_event(id):
 def update_event(id):
 	payload = request.get_json()
 	event_to_update = models.Event.get_by_id(id)
-	if event_to_update.admin.id == current_user.id:
+	if event_to_update.user.id == current_user.id:
 
 		if 'event_name' in payload:
 			event_to_update.event_name = payload['event_name']
@@ -101,7 +101,7 @@ def update_event(id):
 		event_to_update.save()
 		updated_event_dict = model_to_dict(event_to_update)
 
-		updated_event_dict['admin'].pop('password')
+		updated_event_dict['user'].pop('password')
 
 		return jsonify(
 			data=updated_event_dict,
@@ -112,16 +112,16 @@ def update_event(id):
 
 		return jsonify(
 			data={ 'error': '403 Forbidden' },
-			message="Admin's id does not match event's id. Cannot update.",
+			message="User's id does not match event's id. Cannot update.",
 			status=403
 		), 403
 
 @events.route('/<id>', methods=['GET'])
 def show_event(id):
 	event = models.Event.get_by_id(id)
-	if event.admin.id == current_user.id:
+	if event.user.id == current_user.id:
 		event_dict = model_to_dict(event)
-		event_dict['admin'].pop('password')
+		event_dict['user'].pop('password')
 		
 		return jsonify(
 			data=event_dict,

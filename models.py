@@ -18,21 +18,12 @@ class User(UserMixin, Model):
 	username=CharField(unique=True)
 	password=CharField()
 	date_of_birth=DateField()
-	emergency_contact=CharField()
-	about_me=CharField()
-
-	class Meta:
-		database = DATABASE
-
-class Admin(UserMixin, Model):
-	email=CharField(unique=True)
-	username=CharField(unique=True)
-	password=CharField()
-	date_of_birth=DateField()
 	address=CharField()
 	phone_number=CharField()
 	emergency_contact=CharField()
 	about_me=CharField()
+	attending_event=BooleanField(default=False)
+	is_admin=BooleanField(default=False)
 
 	class Meta:
 		database = DATABASE
@@ -42,15 +33,7 @@ class Event(Model):
 	event_organizer=CharField()
 	event_location=CharField()
 	date_of_event=CharField()
-	admin = ForeignKeyField(Admin, backref='events')
-
-	class Meta:
-		database = DATABASE
-
-class AdminStatus(Model):
-	status=CharField()
-	date_posted=DateTimeField(default=datetime.datetime.now)
-	admin = ForeignKeyField(Admin, backref='adminstatuses')
+	user = ForeignKeyField(User, backref='events')
 
 	class Meta:
 		database = DATABASE
@@ -69,6 +52,6 @@ class Status(Model):
 def initialize():
 	DATABASE.connect()
 
-	DATABASE.create_tables([User, Admin, Event, AdminStatus, Status], safe=True)
+	DATABASE.create_tables([User, Event, Status], safe=True)
 	print("Connected to DB and created tables if they didn't already exist.")
 	DATABASE.close()
