@@ -24,7 +24,7 @@ def register():
 	payload['username'] = payload['username'].lower()
 	payload['password'] = payload['password'].lower()
 	payload['date_of_birth'] = payload['date_of_birth']
-	payload['address'] = payload['address']
+	payload['address'] = payload['address'].lower()
 	payload['phone_number'] = payload['phone_number']
 	payload['emergency_contact'] = payload['emergency_contact'].lower()
 	payload['about_me'] = payload['about_me'].lower()
@@ -51,7 +51,6 @@ def register():
 			phone_number=payload['phone_number'],
 			emergency_contact=payload['emergency_contact'],
 			about_me=payload['about_me'],
-			attending_event=payload['attending_event'],
 			is_admin=payload['is_admin']
 		)
 
@@ -124,6 +123,7 @@ def user_index():
 """SHOWS WHO IS LOGGED IN"""
 @users.route('/logged_in_user', methods=['GET'])
 def get_logged_in_user():
+	print("Here is current_user:")
 	print(current_user)
 	print(type(current_user))
 
@@ -152,3 +152,26 @@ def logout():
 		message="Successfully logged out.",
 		status=200
 	), 200
+
+@users.route('/<c>', methods=['PUT'])
+def connect_user(c):
+
+	connect_user_to_event = models.Event.get_by_id(c)
+
+	connected_user = models.User.get_by_id(current_user.id)
+
+	connected_user.attending_event=connect_user_to_event.id
+
+	connected_user.save()
+
+	connected_user_dict = model_to_dict(connected_user)
+
+	print(connected_user_dict)
+	print("Here is connected_user:")
+
+
+	return jsonify(
+		data=connected_user_dict,
+		message="Current user is now attending an event!",
+		status=201
+	), 201

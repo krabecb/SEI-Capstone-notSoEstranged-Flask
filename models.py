@@ -22,7 +22,7 @@ class User(UserMixin, Model):
 	phone_number=CharField()
 	emergency_contact=CharField()
 	about_me=CharField()
-	attending_event=BooleanField(default=False)
+	attending_event=ForeignKeyField(Event, backref='users')
 	is_admin=BooleanField(default=False)
 
 	class Meta:
