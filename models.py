@@ -47,7 +47,7 @@ class Status(Model):
 
 class Attendance(Model):
 	user = ForeignKeyField(User, backref='attendances')
-	events = ForeignKeyField(Event, backref='attendances')
+	event = ForeignKeyField(Event, backref='attendances')
 
 	class Meta:
 		database = DATABASE
@@ -58,6 +58,6 @@ class Attendance(Model):
 def initialize():
 	DATABASE.connect()
 
-	DATABASE.create_tables([User, Event, Status], safe=True)
+	DATABASE.create_tables([User, Event, Status, Attendance], safe=True)
 	print("Connected to DB and created tables if they didn't already exist.")
 	DATABASE.close()

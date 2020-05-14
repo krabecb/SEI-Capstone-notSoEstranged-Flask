@@ -153,25 +153,25 @@ def logout():
 		status=200
 	), 200
 
-@users.route('/<c>', methods=['PUT'])
-def connect_user(c):
+@users.route('/<eventid>', methods=['POST'])
+def connect_user(eventid):
 
-	connect_user_to_event = models.Event.get_by_id(c)
+	user_attending_event = models.Attendance.create(
+		user=current_user.id,
+		event=eventid
+	)
 
-	connected_user = models.User.get_by_id(current_user.id)
+	user_attending_event_dict = model_to_dict(user_attending_event)
 
-	connected_user.attending_event=connect_user_to_event.id
+	print("Here is user_attending_event_dict:")
+	print(user_attending_event_dict)
 
-	connected_user.save()
+	#Don't let user attend same event twice
 
-	connected_user_dict = model_to_dict(connected_user)
-
-	print(connected_user_dict)
-	print("Here is connected_user:")
 
 
 	return jsonify(
-		data=connected_user_dict,
+		data=user_attending_event_dict,
 		message="Current user is now attending an event!",
 		status=201
 	), 201
