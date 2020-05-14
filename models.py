@@ -22,7 +22,6 @@ class User(UserMixin, Model):
 	phone_number=CharField()
 	emergency_contact=CharField()
 	about_me=CharField()
-	attending_event=ForeignKeyField(Event, backref='users')
 	is_admin=BooleanField(default=False)
 
 	class Meta:
@@ -42,6 +41,13 @@ class Status(Model):
 	status=CharField()
 	date_posted=DateTimeField(default=datetime.datetime.now)
 	user = ForeignKeyField(User, backref='statuses')
+
+	class Meta:
+		database = DATABASE
+
+class Attendance(Model):
+	user = ForeignKeyField(User, backref='attendances')
+	events = ForeignKeyField(Event, backref='attendances')
 
 	class Meta:
 		database = DATABASE
