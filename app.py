@@ -6,6 +6,8 @@ from resources.events import events
 
 from resources.statuses import statuses
 
+from resources.attendances import attendances
+
 import models
 
 from flask_cors import CORS 
@@ -58,6 +60,7 @@ def unauthorized():
 CORS(users, origins=['http://localhost:3000'], supports_credentials=True)
 CORS(statuses, origins=['http://localhost:3000'], supports_credentials=True)
 CORS(events, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(attendances, origins=['http://localhost:3000'], supports_credentials=True)
 
 
 
@@ -65,6 +68,7 @@ CORS(events, origins=['http://localhost:3000'], supports_credentials=True)
 app.register_blueprint(users, url_prefix='/api/users/')
 app.register_blueprint(events, url_prefix='/api/events/')
 app.register_blueprint(statuses, url_prefix='/api/statuses/')
+app.register_blueprint(attendances, url_prefix='/api/attendances/')
 
 
 
