@@ -17,16 +17,14 @@ events = Blueprint('events', 'events')
 @events.route('/', methods=['GET'])
 @login_required
 def events_index():
-	current_user_event_dicts = [model_to_dict(event) for event in current_user.events]
+	events = models.Event.select()
+	event_dicts = [ model_to_dict(event) for event in events]
 
-	for event_dict in current_user_event_dicts:
-		event_dict['user'].pop('password')
-
-	print(current_user_event_dicts)
+	print(event_dicts)
 
 	return jsonify({
-		'data': current_user_event_dicts,
-		'message': f"Found {len(current_user_event_dicts)} events.",
+		'data': event_dicts,
+		'message': f"Found {len(event_dicts)} events.",
 		'status': 200
 	}), 200
 
