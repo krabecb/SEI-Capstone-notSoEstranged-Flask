@@ -168,8 +168,6 @@ def connect_user(eventid):
 
 	#Don't let user attend same event twice
 
-
-
 	return jsonify(
 		data=user_attending_event_dict,
 		message="Current user is now attending an event!",

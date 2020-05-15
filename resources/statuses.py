@@ -17,6 +17,7 @@ statuses = Blueprint('statuses', 'statuses')
 @statuses.route('/', methods=['GET'])
 @login_required
 def statuses_index():
+	#Get all the statuses here from the database. MVP. 
 	current_user_status_dicts = [model_to_dict(status) for status in current_user.statuses]
 
 	for status_dict in current_user_status_dicts:
@@ -33,6 +34,7 @@ def statuses_index():
 @statuses.route('/', methods=['POST'])
 @login_required
 def create_status():
+	#include an event id somehow
 	payload = request.get_json()
 	new_status = models.Status.create(
 		status=payload['status'],

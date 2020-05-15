@@ -10,7 +10,7 @@ attendances = Blueprint('attendances', 'attendances')
 @attendances.route('/', methods=['GET'])
 def attendances_index():
 	attendances = models.Attendance.select()
-	attendance_dicts = [ model_to_dict(attendance) for attendance in attendances]
+	attendance_dicts = [ model_to_dict(attendance) for attendance in current_user.attendances]
 
 	print(attendance_dicts)
 

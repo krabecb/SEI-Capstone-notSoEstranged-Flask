@@ -41,6 +41,7 @@ class Status(Model):
 	status=CharField()
 	date_posted=DateTimeField(default=datetime.datetime.now)
 	user = ForeignKeyField(User, backref='statuses')
+	#event fk link to
 
 	class Meta:
 		database = DATABASE
