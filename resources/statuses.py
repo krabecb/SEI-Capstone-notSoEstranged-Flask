@@ -18,31 +18,33 @@ statuses = Blueprint('statuses', 'statuses')
 @login_required
 def statuses_index():
 	#Get all the statuses here from the database. MVP. 
-	current_user_status_dicts = [model_to_dict(status) for status in current_user.statuses]
+	statuses = models.Status.select()
+	status_dicts = [ model_to_dict(status) for status in statuses ]
 
-	for status_dict in current_user_status_dicts:
+	for status_dict in status_dicts:
 		status_dict['user'].pop('password')
 
-	print(current_user_status_dicts)
+	print(status_dicts)
 
 	return jsonify({
-		'data': current_user_status_dicts,
-		'message': f"Found {len(current_user_status_dicts)} statuses.",
+		'data': status_dicts,
+		'message': f"Found {len(status_dicts)} statuses.",
 		'status': 200
 	}), 200
 
-@statuses.route('/', methods=['POST'])
+@statuses.route('/<eventid>', methods=['POST'])
 @login_required
-def create_status():
-	#include an event id somehow
+def create_status(eventid):
 	payload = request.get_json()
 	new_status = models.Status.create(
 		status=payload['status'],
-		user=current_user.id
+		user=current_user.id,
+		event=eventid
 	)
 
 	status_dict = model_to_dict(new_status)
 
+	print("Here is status_dict:")
 	print(status_dict)
 
 	status_dict['user'].pop('password')
