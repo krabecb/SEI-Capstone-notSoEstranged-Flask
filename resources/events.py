@@ -37,6 +37,9 @@ def create_event():
 		event_organizer=payload['event_organizer'],
 		event_location=payload['event_location'],
 		date_of_event=payload['date_of_event'],
+		event_description=payload['event_description'],
+		longitude=payload['longitude'],
+		latitude=payload['latitude'],
 		user=current_user.id
 	)
 
@@ -95,6 +98,12 @@ def update_event(id):
 			event_to_update.event_location = payload['event_location']
 		if 'date_of_event' in payload:
 			event_to_update.date_of_event = payload['date_of_event']
+		if 'event_description' in payload:
+			event_to_update.event_description = payload['event_description']
+		if 'longitude' in payload:
+			event_to_update.longitude = payload['longitude']
+		if 'latitude' in payload:
+			event_to_update.latitude = payload['latitude']
 
 		event_to_update.save()
 		updated_event_dict = model_to_dict(event_to_update)

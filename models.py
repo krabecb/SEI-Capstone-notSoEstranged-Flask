@@ -32,6 +32,9 @@ class Event(Model):
 	event_organizer=CharField()
 	event_location=CharField()
 	date_of_event=CharField()
+	event_description=CharField()
+	longitude=CharField()
+	latitude=CharField()
 	user = ForeignKeyField(User, backref='events')
 
 	class Meta:
