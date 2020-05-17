@@ -58,10 +58,10 @@ def unauthorized():
 
 
 
-CORS(users, origins=['http://localhost:3000'], supports_credentials=True)
-CORS(statuses, origins=['http://localhost:3000'], supports_credentials=True)
-CORS(events, origins=['http://localhost:3000'], supports_credentials=True)
-CORS(attendances, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(users, origins=['http://localhost:3000', 'https://notsoestranged.herokuapp.com'], supports_credentials=True)
+CORS(statuses, origins=['http://localhost:3000', 'https://notsoestranged.herokuapp.com'], supports_credentials=True)
+CORS(events, origins=['http://localhost:3000', 'https://notsoestranged.herokuapp.com'], supports_credentials=True)
+CORS(attendances, origins=['http://localhost:3000', 'https://notsoestranged.herokuapp.com'], supports_credentials=True)
 
 
 
